@@ -16,6 +16,15 @@ class C_BDD {
         //$this->M_BDD = new PDO('mysql:host=localhost;dbname=web;charset=UTF-8','phpmyadmin','user'); // -> Raspberry
     }
     
+    public function getvarweb(){
+        $this->connect();
+        $sth = $this->M_BDD->prepare("SELECT * FROM var_web");
+        $sth->execute();
+        $this->deconnect();
+        return $sth->fetch(PDO::FETCH_ASSOC);
+        
+    }
+    
     public function deconnect(){
         $this->M_BDD = NULL;
     }
