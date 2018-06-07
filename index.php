@@ -8,5 +8,13 @@
     $Smarty->compile_dir ='tmp';
     $Smarty->template_dir = 'templates';
     
+    $name_web = $bdd->getvarweb();
+    
+    $array = array(
+      "web_name" => $name_web['web_name']  
+    );
+    
+    $Smarty->assign('var',$array);
+    
     $Smarty->display('login.tpl');
 ?>
