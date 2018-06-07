@@ -21,8 +21,16 @@ class C_BDD {
         $sth = $this->M_BDD->prepare("SELECT * FROM var_web");
         $sth->execute();
         $this->deconnect();
-        return $sth->fetch(PDO::FETCH_ASSOC);
-        
+        return $sth->fetch(PDO::FETCH_ASSOC);       
+    }
+    
+    public function user_auth($user,$mdp){
+        $this->connect();
+        $sth = $this->M_BDD->prepare("SELECT * FROM user WHERE user=? AND password=?");
+        $sth->execute(array($user,$mdp));
+        $userexit = $sth->rowcount();
+        $this->deconnect();
+        return $userexit;
     }
     
     public function deconnect(){
