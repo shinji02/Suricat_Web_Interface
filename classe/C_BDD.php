@@ -32,6 +32,13 @@ class C_BDD {
         $this->deconnect();
         return $userexit;
     }
+    public function getuserinfo($user,$mdp){
+        $this->connect();
+        $sth = $this->M_BDD->prepare("SELECT * FROM user WHERE user=? AND password=?");
+        $sth->execute(array($user,$mdp));
+        $this->deconnect();
+        return $sth->fetch(PDO::FETCH_ASSOC);
+    }
     
     public function deconnect(){
         $this->M_BDD = NULL;
