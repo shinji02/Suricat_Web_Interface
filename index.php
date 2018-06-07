@@ -16,7 +16,12 @@
             $login = htmlspecialchars($_POST['pseudo']);
             $mdp = sha1($_POST['password']);       
             $rsp = $bdd->user_auth($login, $mdp);
+            $info = $bdd->getuserinfo($login, $mdp);
             if($rsp==1){
+                session_start();
+                $_SESSION['id'] = $info['id'];
+                $_SESSION['name'] = $info['user'];
+                
                 $array = array(
                     'web_name' => $name_web['web_name'],
                     'sucess' => array('sucessn' => 1,
@@ -45,8 +50,20 @@
         }
         $Smarty->display('login.tpl');
     }
+    else if(isset($_GET['page'])){
+        session_start();
+        if($_GET['page']=='web_index.tpl'){
+            $array = array(
+                "web_name" => $name_web['web_name'],
+                "username" => $_SESSION['name']
+            );
+            $Smarty->assign('var',$array);
+        }
+        $Smarty->display('interfaces/'.$_GET['page']);
+        }
     else
     {  
+        var_dump($_GET);
         $array = array(
           "web_name" => $name_web['web_name']  
         );
